@@ -10,6 +10,7 @@ import page.DepositPage;
 import page.VerifyPage;
 
 import static com.codeborne.selenide.Selenide.open;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestForm {
     @BeforeEach
@@ -18,12 +19,24 @@ public class TestForm {
     }
 
     @Test
-
-    public void testLogin(){
+    public void testLogin() {
         AuthPage.login(DataHelper.getAuthInfo());
         VerifyPage.verify(DataHelper.getVerifyCode());
-        CardsPage.card1ClickDeposit();
-        DepositPage.cardDeposit(100, DataHelper.getSecondCard());
-        Configuration.holdBrowserOpen=true;
+    }
+
+    @Test
+    public void testDepositFirstCard() {
+        int amountDeposit = 1000;
+        testLogin();
+        int startBalanceFirstCard = CardsPage.getCardBalance("0001");
+        int startBalanceSecondCard = CardsPage.getCardBalance("0002");
+        CardsPage.clickCardDepositButton("0001");
+        DepositPage.cardDeposit(amountDeposit, DataHelper.getSecondCard());
+        int finishBalanceFirstCard = CardsPage.getCardBalance("0001");
+        int finishBalanceSecondCard = CardsPage.getCardBalance("0002");
+        assertEquals(startBalanceFirstCard + amountDeposit, finishBalanceFirstCard);
+        assertEquals(startBalanceSecondCard - amountDeposit, finishBalanceSecondCard);
+
+        Configuration.holdBrowserOpen = true;
     }
 }
