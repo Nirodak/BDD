@@ -31,5 +31,10 @@ public class CardsPage {
         return cardBalancePars(cardText);
     }
 
+    public static boolean checkLess(String lastNum) {
+        var finishBalance = getCardBalance(lastNum);
+        return finishBalance>=0;
+
+    }
 
 }
