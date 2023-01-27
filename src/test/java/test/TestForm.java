@@ -17,6 +17,8 @@ public class TestForm {
     void setup() {
         open("http://localhost:9999");
     }
+    public String firstCardNum = "0001";
+    public String secondCardNum = "0002";
 
     @Test
     public void testLogin() {
@@ -28,13 +30,13 @@ public class TestForm {
     public void testDepositFirstCard() {
         int amountDeposit = 1000;
         testLogin();
-        int startBalanceFirstCard = CardsPage.getCardBalance("0001");
-        int startBalanceSecondCard = CardsPage.getCardBalance("0002");
-        CardsPage.clickCardDepositButton("0001");
+        int startBalanceFirstCard = CardsPage.getCardBalance(firstCardNum);
+        int startBalanceSecondCard = CardsPage.getCardBalance(secondCardNum);
+        CardsPage.clickCardDepositButton(firstCardNum);
         DepositPage.cardDeposit(amountDeposit, DataHelper.getSecondCard());
-        boolean checkBalanceLess = CardsPage.checkLess("0002");
-        int finishBalanceFirstCard = CardsPage.getCardBalance("0001");
-        int finishBalanceSecondCard = CardsPage.getCardBalance("0002");
+        boolean checkBalanceLess = CardsPage.checkLess(secondCardNum);
+        int finishBalanceFirstCard = CardsPage.getCardBalance(firstCardNum);
+        int finishBalanceSecondCard = CardsPage.getCardBalance(secondCardNum);
         assertEquals(true, checkBalanceLess);
         assertEquals(startBalanceFirstCard + amountDeposit, finishBalanceFirstCard);
         assertEquals(startBalanceSecondCard - amountDeposit, finishBalanceSecondCard);
@@ -46,13 +48,13 @@ public class TestForm {
     public void testDepositFirstCardOverLimit() {
         int amountDeposit = 20000;
         testLogin();
-        int startBalanceFirstCard = CardsPage.getCardBalance("0001");
-        int startBalanceSecondCard = CardsPage.getCardBalance("0002");
-        CardsPage.clickCardDepositButton("0001");
+        int startBalanceFirstCard = CardsPage.getCardBalance(firstCardNum);
+        int startBalanceSecondCard = CardsPage.getCardBalance(secondCardNum);
+        CardsPage.clickCardDepositButton(firstCardNum);
         DepositPage.cardDeposit(amountDeposit, DataHelper.getSecondCard());
-        boolean checkBalanceLess = CardsPage.checkLess("0002");
-        int finishBalanceFirstCard = CardsPage.getCardBalance("0001");
-        int finishBalanceSecondCard = CardsPage.getCardBalance("0002");
+        boolean checkBalanceLess = CardsPage.checkLess(secondCardNum);
+        int finishBalanceFirstCard = CardsPage.getCardBalance(firstCardNum);
+        int finishBalanceSecondCard = CardsPage.getCardBalance(secondCardNum);
         assertEquals(true, checkBalanceLess);
         assertEquals(startBalanceFirstCard + amountDeposit, finishBalanceFirstCard);
         assertEquals(startBalanceSecondCard - amountDeposit, finishBalanceSecondCard);
