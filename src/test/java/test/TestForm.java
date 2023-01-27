@@ -46,7 +46,6 @@ public class TestForm {
     public void testDepositFirstCardOverLimit() {
         int amountDeposit = 20000;
         testLogin();
-
         int startBalanceFirstCard = CardsPage.getCardBalance("0001");
         int startBalanceSecondCard = CardsPage.getCardBalance("0002");
         CardsPage.clickCardDepositButton("0001");
