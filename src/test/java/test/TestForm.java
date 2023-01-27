@@ -20,15 +20,12 @@ public class TestForm {
     public String firstCardNum = "0001";
     public String secondCardNum = "0002";
 
-    public void testLogin() {
+    public void login() {
         AuthPage.login(DataHelper.getAuthInfo());
         VerifyPage.verify(DataHelper.getVerifyCode());
     }
-
-    @Test
-    public void testDepositFirstCard() {
-        int amountDeposit = 1000;
-        testLogin();
+    public void depositFirstCard(int amountDeposit) {
+        login();
         int startBalanceFirstCard = CardsPage.getCardBalance(firstCardNum);
         int startBalanceSecondCard = CardsPage.getCardBalance(secondCardNum);
         CardsPage.clickCardDepositButton(firstCardNum);
@@ -43,20 +40,12 @@ public class TestForm {
     }
 
     @Test
-    public void testDepositFirstCardOverLimit() {
-        int amountDeposit = 20000;
-        testLogin();
-        int startBalanceFirstCard = CardsPage.getCardBalance(firstCardNum);
-        int startBalanceSecondCard = CardsPage.getCardBalance(secondCardNum);
-        CardsPage.clickCardDepositButton(firstCardNum);
-        DepositPage.cardDeposit(amountDeposit, DataHelper.getSecondCard());
-        boolean checkBalanceLess = CardsPage.checkLess(secondCardNum);
-        int finishBalanceFirstCard = CardsPage.getCardBalance(firstCardNum);
-        int finishBalanceSecondCard = CardsPage.getCardBalance(secondCardNum);
-        assertEquals(true, checkBalanceLess);
-        assertEquals(startBalanceFirstCard + amountDeposit, finishBalanceFirstCard);
-        assertEquals(startBalanceSecondCard - amountDeposit, finishBalanceSecondCard);
-
-
+    public void depositFirstCardBalance(){
+        depositFirstCard(1000);
+        Configuration.holdBrowserOpen=true;
+    }
+    @Test
+    public void depositFirstCardOverBalance(){
+        depositFirstCard(50000);
     }
 }
