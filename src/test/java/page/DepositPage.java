@@ -1,7 +1,6 @@
 package page;
 
 
-
 import com.codeborne.selenide.SelenideElement;
 import data.DataHelper;
 

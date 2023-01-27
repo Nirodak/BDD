@@ -33,7 +33,7 @@ public class CardsPage {
 
     public static boolean checkLess(String lastNum) {
         var finishBalance = getCardBalance(lastNum);
-        return finishBalance>=0;
+        return finishBalance >= 0;
 
     }
 

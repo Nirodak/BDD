@@ -17,6 +17,7 @@ public class TestForm {
     void setup() {
         open("http://localhost:9999");
     }
+
     public String firstCardNum = "0001";
     public String secondCardNum = "0002";
 
@@ -24,6 +25,7 @@ public class TestForm {
         AuthPage.login(DataHelper.getAuthInfo());
         VerifyPage.verify(DataHelper.getVerifyCode());
     }
+
     public void depositFirstCard(int amountDeposit) {
         login();
         int startBalanceFirstCard = CardsPage.getCardBalance(firstCardNum);
@@ -40,12 +42,12 @@ public class TestForm {
     }
 
     @Test
-    public void depositFirstCardBalance(){
+    public void depositFirstCardBalance() {
         depositFirstCard(1000);
-        Configuration.holdBrowserOpen=true;
     }
+
     @Test
-    public void depositFirstCardOverBalance(){
+    public void depositFirstCardOverBalance() {
         depositFirstCard(50000);
     }
 }

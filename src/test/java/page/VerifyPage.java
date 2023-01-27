@@ -15,7 +15,5 @@ public class VerifyPage {
         codeVerifySelector.setValue(code.getVerifyCode());
         buttonVerifySelector.click();
 
-
-
     }
 }
