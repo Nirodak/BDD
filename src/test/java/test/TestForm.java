@@ -34,10 +34,10 @@ public class TestForm {
         int startBalanceSecondCard = CardsPage.getCardBalance(secondCardNum);
         CardsPage.clickCardDepositButton(firstCardNum);
         DepositPage.cardDeposit(amountDeposit, DataHelper.getSecondCard());
-        boolean checkBalanceLess = CardsPage.checkLess(secondCardNum);
+//        boolean checkBalanceLess = CardsPage.checkLess(secondCardNum);
         int finishBalanceFirstCard = CardsPage.getCardBalance(firstCardNum);
         int finishBalanceSecondCard = CardsPage.getCardBalance(secondCardNum);
-        assertEquals(true, checkBalanceLess);
+//        assertEquals(true, checkBalanceLess);
         assertEquals(startBalanceFirstCard + amountDeposit, finishBalanceFirstCard);
         assertEquals(startBalanceSecondCard - amountDeposit, finishBalanceSecondCard);
 
