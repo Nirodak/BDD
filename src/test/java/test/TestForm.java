@@ -29,20 +29,21 @@ public class TestForm {
         verifyPage.verify(DataHelper.getVerifyCode());
     }
 
+
     public void depositFirstCard(int amountDeposit) {
         login();
         CardsPage cardsPage = new CardsPage();
         DepositPage depositPage = new DepositPage();
-        int startBalanceFirstCard = cardsPage.getCardBalance(firstCardNum);
-        int startBalanceSecondCard = cardsPage.getCardBalance(secondCardNum);
+        int checkAmountBalanceTo = cardsPage.checkBalanceAmount(firstCardNum, amountDeposit, "to");
+        int checkAmountBalanceFrom = cardsPage.checkBalanceAmount(secondCardNum, amountDeposit, "from");
         cardsPage.clickCardDepositButton(firstCardNum);
         depositPage.cardDeposit(amountDeposit, DataHelper.getSecondCard());
         int finishBalanceFirstCard = cardsPage.getCardBalance(firstCardNum);
         int finishBalanceSecondCard = cardsPage.getCardBalance(secondCardNum);
-        assertEquals(startBalanceFirstCard + amountDeposit, finishBalanceFirstCard);
-        assertEquals(startBalanceSecondCard - amountDeposit, finishBalanceSecondCard);
-
+        assertEquals(checkAmountBalanceTo, finishBalanceFirstCard);
+        assertEquals(checkAmountBalanceFrom, finishBalanceSecondCard);
     }
+
 
     @Test
     public void depositFirstCardBalance() {
@@ -53,4 +54,5 @@ public class TestForm {
     public void depositFirstCardOverBalance() {
         depositFirstCard(50000);
     }
+
 }
