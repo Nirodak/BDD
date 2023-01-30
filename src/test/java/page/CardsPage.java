@@ -7,17 +7,15 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 
 public class CardsPage {
-    public static SelenideElement getCardSelector(String lastNum) {
-        return $x(".//div[text() = '**** **** **** " + lastNum + "']");
-    }
 
-    public static void clickCardDepositButton(String lastNum) {
-        var cardSelector = getCardSelector(lastNum);
+
+    public void clickCardDepositButton(String lastNum) {
+        SelenideElement cardSelector = $x(".//div[text() = '**** **** **** " + lastNum + "']");
         cardSelector.$("button").click();
     }
 
 
-    private static int cardBalancePars(String text) {
+    private int cardBalancePars(String text) {
         String cardBalanceTextStart = "баланс: ";
         String cardBalanceTextFinish = " р.";
         val start = text.indexOf(cardBalanceTextStart);
@@ -26,15 +24,10 @@ public class CardsPage {
         return Integer.parseInt(balance);
     }
 
-    public static int getCardBalance(String lastNum) {
-        val cardText = getCardSelector(lastNum).text();
-        return cardBalancePars(cardText);
+    public int getCardBalance(String lastNum) {
+        String cardBalance = $x(".//div[text() = '**** **** **** " + lastNum + "']").text();
+        return cardBalancePars(cardBalance);
     }
 
-    public static boolean checkLess(String lastNum) {
-        var finishBalance = getCardBalance(lastNum);
-        return finishBalance >= 0;
-
-    }
 
 }

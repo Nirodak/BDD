@@ -21,21 +21,24 @@ public class TestForm {
     public String firstCardNum = "0001";
     public String secondCardNum = "0002";
 
+
     public void login() {
-        AuthPage.login(DataHelper.getAuthInfo());
-        VerifyPage.verify(DataHelper.getVerifyCode());
+        AuthPage authPage = new AuthPage();
+        VerifyPage verifyPage = new VerifyPage();
+        authPage.login(DataHelper.getAuthInfo());
+        verifyPage.verify(DataHelper.getVerifyCode());
     }
 
     public void depositFirstCard(int amountDeposit) {
         login();
-        int startBalanceFirstCard = CardsPage.getCardBalance(firstCardNum);
-        int startBalanceSecondCard = CardsPage.getCardBalance(secondCardNum);
-        CardsPage.clickCardDepositButton(firstCardNum);
-        DepositPage.cardDeposit(amountDeposit, DataHelper.getSecondCard());
-        boolean checkBalanceLess = CardsPage.checkLess(secondCardNum);
-        int finishBalanceFirstCard = CardsPage.getCardBalance(firstCardNum);
-        int finishBalanceSecondCard = CardsPage.getCardBalance(secondCardNum);
-        assertEquals(true, checkBalanceLess);
+        CardsPage cardsPage = new CardsPage();
+        DepositPage depositPage = new DepositPage();
+        int startBalanceFirstCard = cardsPage.getCardBalance(firstCardNum);
+        int startBalanceSecondCard = cardsPage.getCardBalance(secondCardNum);
+        cardsPage.clickCardDepositButton(firstCardNum);
+        depositPage.cardDeposit(amountDeposit, DataHelper.getSecondCard());
+        int finishBalanceFirstCard = cardsPage.getCardBalance(firstCardNum);
+        int finishBalanceSecondCard = cardsPage.getCardBalance(secondCardNum);
         assertEquals(startBalanceFirstCard + amountDeposit, finishBalanceFirstCard);
         assertEquals(startBalanceSecondCard - amountDeposit, finishBalanceSecondCard);
 

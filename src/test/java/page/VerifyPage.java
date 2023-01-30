@@ -7,11 +7,11 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class VerifyPage {
 
-    private static SelenideElement codeVerifySelector = $("[data-test-id='code'] input");
-    private static SelenideElement buttonVerifySelector = $("[data-test-id='action-verify']");
+    private SelenideElement codeVerifySelector = $("[data-test-id='code'] input");
+    private SelenideElement buttonVerifySelector = $("[data-test-id='action-verify']");
 
 
-    public static void verify(DataHelper.VerifyCode code) {
+    public void verify(DataHelper.VerifyCode code) {
         codeVerifySelector.setValue(code.getVerifyCode());
         buttonVerifySelector.click();
 
