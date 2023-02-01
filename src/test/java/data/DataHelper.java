@@ -41,18 +41,7 @@ public class DataHelper {
         return new Cards("5559 0000 0000 0002");
     }
 
-    public int checkBalanceAmount(String lastNum, int amountDeposit, String type) {
-        CardsPage cardsPage = new CardsPage();
-        var startBalance = cardsPage.getCardBalance(lastNum);
-        if (startBalance >= amountDeposit) {
-            if (type == "from")
-                return startBalance - amountDeposit;
-            else if (type == "to") {
-                return startBalance + amountDeposit;
-            }
-        }
-        return startBalance;
-    }
+
 
 }
 
