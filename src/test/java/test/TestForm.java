@@ -21,6 +21,18 @@ public class TestForm {
     public String firstCardNum = "0001";
     public String secondCardNum = "0002";
 
+    public int checkBalanceAmount(String lastNum, int amountDeposit, String type) {
+        CardsPage cardsPage = new CardsPage();
+        var startBalance = cardsPage.getCardBalance(lastNum);
+        if (startBalance >= amountDeposit) {
+            if (type == "from")
+                return startBalance - amountDeposit;
+            else if (type == "to") {
+                return startBalance + amountDeposit;
+            }
+        }
+        return startBalance;
+    }
 
     public void login() {
         AuthPage authPage = new AuthPage();
@@ -33,10 +45,10 @@ public class TestForm {
     public void depositFirstCard(int amountDeposit) {
         login();
         CardsPage cardsPage = new CardsPage();
-        DepositPage depositPage = new DepositPage();
-        int checkAmountBalanceTo = cardsPage.checkBalanceAmount(firstCardNum, amountDeposit, "to");
-        int checkAmountBalanceFrom = cardsPage.checkBalanceAmount(secondCardNum, amountDeposit, "from");
+        int checkAmountBalanceTo = checkBalanceAmount(firstCardNum, amountDeposit, "to");
+        int checkAmountBalanceFrom = checkBalanceAmount(secondCardNum, amountDeposit, "from");
         cardsPage.clickCardDepositButton(firstCardNum);
+        DepositPage depositPage = new DepositPage();
         depositPage.cardDeposit(amountDeposit, DataHelper.getSecondCard());
         int finishBalanceFirstCard = cardsPage.getCardBalance(firstCardNum);
         int finishBalanceSecondCard = cardsPage.getCardBalance(secondCardNum);
@@ -49,10 +61,40 @@ public class TestForm {
     public void depositFirstCardBalance() {
         depositFirstCard(1000);
     }
+    @Test
+    public void depositSecondCardBalance(){
+        login();
+        int amountDeposit = 1000;
+        CardsPage cardsPage = new CardsPage();
+        int checkAmountBalanceTo = checkBalanceAmount(secondCardNum, amountDeposit, "to");
+        int checkAmountBalanceFrom = checkBalanceAmount(firstCardNum, amountDeposit, "from");
+        cardsPage.clickCardDepositButton(secondCardNum);
+        DepositPage depositPage = new DepositPage();
+        depositPage.cardDeposit(amountDeposit, DataHelper.getFirstCard());
+        int finishBalanceFirstCard = cardsPage.getCardBalance(firstCardNum);
+        int finishBalanceSecondCard = cardsPage.getCardBalance(secondCardNum);
+        assertEquals(checkAmountBalanceTo, finishBalanceSecondCard);
+        assertEquals(checkAmountBalanceFrom, finishBalanceFirstCard);
+    }
 
     @Test
     public void depositFirstCardOverBalance() {
         depositFirstCard(50000);
+    }
+    @Test
+    public void depositSecondCardOverBalance(){
+        login();
+        int amountDeposit = 50000;
+        CardsPage cardsPage = new CardsPage();
+        int checkAmountBalanceTo = checkBalanceAmount(secondCardNum, amountDeposit, "to");
+        int checkAmountBalanceFrom = checkBalanceAmount(firstCardNum, amountDeposit, "from");
+        cardsPage.clickCardDepositButton(secondCardNum);
+        DepositPage depositPage = new DepositPage();
+        depositPage.cardDeposit(amountDeposit, DataHelper.getFirstCard());
+        int finishBalanceFirstCard = cardsPage.getCardBalance(firstCardNum);
+        int finishBalanceSecondCard = cardsPage.getCardBalance(secondCardNum);
+        assertEquals(checkAmountBalanceTo, finishBalanceSecondCard);
+        assertEquals(checkAmountBalanceFrom, finishBalanceFirstCard);
     }
 
 }

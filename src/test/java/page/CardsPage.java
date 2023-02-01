@@ -29,15 +29,4 @@ public class CardsPage {
         return cardBalancePars(cardBalance);
     }
 
-    public int checkBalanceAmount(String lastNum, int amountDeposit, String type) {
-        var startBalance = getCardBalance(lastNum);
-        if (startBalance >= amountDeposit) {
-            if (type == "from")
-                return startBalance - amountDeposit;
-            else if (type == "to") {
-                return startBalance + amountDeposit;
-            }
-        }
-        return startBalance;
-    }
 }
